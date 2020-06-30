@@ -78,7 +78,7 @@ set -x
 # Start building libraries
 #
    CFLAGSDEFSCONF=${CFLAGSDEFS}
-   for array_type in DYNAMIC STATIC; do
+   for array_type in STATIC; do
       FPPCPP="-D${byte_order} -D${array_type}_ALLOCATION"
       CFLAGSDEFS="$CFLAGSDEFSCONF -D${array_type}_ALLOCATION"
       for bprm in MAXNC MXNAF; do
@@ -103,13 +103,13 @@ set -x
         bufrInfo4=bufr_info_and_log4.txt
         collect_info bufr 4 OneLine4 LibInfo4
       }
-      make clean
+      make -d clean
       setx_status=${-//[^x]/}
       [[ -n $setx_status ]] && set +x
       echo "$bufrInfo0" > $bufrInfo4
       [[ -n $setx_status ]] && set -x
-      $debg && make debug FFLAGS="$FFLAGS4" &>> $bufrInfo4 \
-            || make build FFLAGS="$FFLAGS4" &>> $bufrInfo4
+      $debg && make -d debug FFLAGS="$FFLAGS4" &>> $bufrInfo4 \
+            || make -d build FFLAGS="$FFLAGS4" &>> $bufrInfo4
       make message MSGSRC="$(gen_cfunction $bufrInfo4 OneLine4 LibInfo4)"
 
 #
@@ -130,14 +130,14 @@ set -x
         bufrInfo8=bufr_info_and_log8.txt
         collect_info bufr 8 OneLine8 LibInfo8
       }
-      make clean
+      make -d clean
       setx_status=${-//[^x]/}
       [[ -n $setx_status ]] && set +x
       echo "$bufrInfo0" > $bufrInfo8
       [[ -n $setx_status ]] && set -x
-      $debg && make debug FFLAGS="$FFLAGS8" CFLAGSDEFS="$CFLAGSDEFS8" \
+      $debg && make -d debug FFLAGS="$FFLAGS8" CFLAGSDEFS="$CFLAGSDEFS8" \
                           &>> $bufrInfo8 \
-            || make build FFLAGS="$FFLAGS8" CFLAGSDEFS="$CFLAGSDEFS8" \
+            || make -d build FFLAGS="$FFLAGS8" CFLAGSDEFS="$CFLAGSDEFS8" \
                           &>> $bufrInfo8
       make message MSGSRC="$(gen_cfunction $bufrInfo8 OneLine8 LibInfo8)"
 

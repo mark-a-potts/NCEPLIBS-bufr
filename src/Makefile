@@ -2,11 +2,13 @@ SHELL=/bin/sh
 
 # sources, headers, objects, library and etc.
 SRCS_F  = $(wildcard modv_*.F) $(wildcard moda_*.F)
+OSRCS_F = $(wildcard [a-l]*.F) $(wildcard [n-z]*.F)
 SRCS_f  = $(wildcard *.f)
 SRCS_C  = $(wildcard *.c)
 DEPS    = $(wildcard *.h)
 OBJS    = $(patsubst %.c, %.o, $(SRCS_C)) \
           $(patsubst %.F, %.o, $(SRCS_F)) \
+          $(patsubst %.F, %.o, $(OSRCS_F)) \
           $(patsubst %.f, %.o, $(SRCS_f))
 MODS    = $(wildcard *.mod)
 
